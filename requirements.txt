@@ -4,4 +4,3 @@ telepot
 flake8
 oauth2client
 alembic
-unittest

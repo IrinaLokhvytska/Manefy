@@ -5,3 +5,6 @@ python:
 
 services:
   - docker
+
+script:
+  - python test/tests.py

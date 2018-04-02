@@ -1,4 +1,4 @@
-#Docker
+# Docker
 1. Install Docker Toolbox for Windows
 2. Run Docker QuickStart
 3. Change directory and run `docker build -t monefy .`

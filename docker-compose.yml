@@ -2,11 +2,13 @@ version: '2'
 services:
   web:
     build: .
+    depends_on:
+      - db
     ports:
      - "4000:80"
     volumes:
      - .:/app
-  postgresql:
+  db:
     image: postgres:9.5.4
     ports:
       - "5432"

@@ -1,6 +1,5 @@
 from sanic import Sanic
 from sanic.response import json
-# from dropbox_app import auth
 # import sqlalchemy
 # import alembic
 # import telepot
@@ -14,11 +13,6 @@ app = Sanic()
 async def test(request):
     return json({'hello': 'world'})
 
-
-# @app.route('/upload')
-# async def upload(request):
-#     dropbox_class = auth.AuthDropbox()
-#     dropbox_class.upload_file_to_dropbox()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)

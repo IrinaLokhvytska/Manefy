@@ -7,4 +7,5 @@ services:
   - docker
 
 script:
+  - flake8 cmdbox
   - python test/tests.py

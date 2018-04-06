@@ -1,7 +1,9 @@
 import pandas as pd
 
+
 class FileParse:
-    def read_from_file(self, path):
+    @staticmethod
+    def read_from_file(path):
         return pd.read_csv(path)
 
     def get_balance(self, data):
@@ -10,10 +12,12 @@ class FileParse:
         result = self.__convert_amount_2_float(amount).sum()
         return result
 
-    def __replace_space(self, amount):
+    @staticmethod
+    def __replace_space(amount):
         return amount.apply(lambda x: x.replace('\xa0', ''))
 
-    def __convert_amount_2_float(self, amount):
+    @staticmethod
+    def __convert_amount_2_float(amount):
         return pd.to_numeric(amount)
 
 

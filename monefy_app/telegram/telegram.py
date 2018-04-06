@@ -6,8 +6,8 @@ class MonefyBot:
     key = keys.TRLEGRAM_KEY
 
     def test_bot(self):
-        bot = telepot.Bot(self.key)
-        return bot.getMe()
+        bot_account = telepot.Bot(self.key)
+        return bot_account.getMe()
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ class MonefyBot:
 
     def handle(self, msg):
         chat_id = msg['chat']['id']
-        self.bot_account.sendMessage(chat_id, 'Test')
+        self.bot_account.sendMessage(chat_id, msg['text'])
 
 
 if __name__ == '__main__':

@@ -1,15 +1,20 @@
 import telepot
 from monefy_app import keys
+from telepot.loop import MessageLoop
 
 
 class MonefyBot:
-    key = keys.TRLEGRAM_KEY
+    bot_account = telepot.Bot(keys.TRLEGRAM_KEY)
 
     def test_bot(self):
-        bot_account = telepot.Bot(self.key)
-        return bot_account.getMe()
+        return self.bot_account.getMe()
+
+    def handle(self, msg):
+        chat_id = msg['chat']['id']
+        self.bot_account.sendMessage(chat_id, 'Test')
 
 
 if __name__ == '__main__':
     bot = MonefyBot()
+    MessageLoop(bot.bot_account, bot.handle).run_as_thread()
     print(bot.test_bot())

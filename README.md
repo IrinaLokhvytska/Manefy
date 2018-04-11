@@ -54,12 +54,12 @@
 Telegram Bot:
 name - MonefyBot
 
-#PostgreSQL
+# PostgreSQL
 1. `sudo -u postgres psql`
 2. \password postgres
 3. `CREATE DATABASE monefy;`
 
-#Alembic
+# Alembic
 1. `alembic init --template generic alembic`
 2. change sqlalchemy.url in alembic.ini
 3. `alembic current`

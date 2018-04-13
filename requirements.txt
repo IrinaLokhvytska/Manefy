@@ -1,9 +1,0 @@
-sanic
-sqlalchemy
-telepot
-flake8
-oauth2client
-alembic
-psycopg2
-pandas
-dropbox

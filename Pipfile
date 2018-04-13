@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+telepot = "*"
+"flake8" = "*"
+"oauth2client" = "*"
+alembic = "*"
+"psycopg2" = "*"
+pandas = "*"
+dropbox = "*"
+Sanic = "*"
+SQLAlchemy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"

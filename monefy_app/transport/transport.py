@@ -3,7 +3,8 @@ from monefy_app import keys
 
 
 class DropboxTransport:
-    def test_dropbox(self):
+    @staticmethod
+    def test_dropbox():
         dbx = dropbox.Dropbox(keys.access_token)
         return dbx.users_get_current_account()
 

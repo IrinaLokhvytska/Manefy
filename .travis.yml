@@ -6,6 +6,8 @@ python:
 services:
   - docker
 
+install:
+  - pipenv install
 script:
   - flake8
   - python test/tests.py

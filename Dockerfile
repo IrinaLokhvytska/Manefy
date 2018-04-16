@@ -5,4 +5,4 @@ ADD . /app
 RUN pip install pipenv
 RUN pipenv install --dev
 EXPOSE 80
-CMD [ "python", "manage.py" ]
+CMD [ "python", "app.py" ]

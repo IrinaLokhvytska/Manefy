@@ -3,9 +3,9 @@ import os
 import re
 
 from datetime import datetime
-from monefy_app import keys
+import keys
 
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 class DropboxTransport:
@@ -74,4 +74,5 @@ class DropboxTransport:
 
 if __name__ == '__main__':
     dropbox_class = DropboxTransport()
+    dropbox_class.save_monefy_file()
     print(dropbox_class.test_dropbox())

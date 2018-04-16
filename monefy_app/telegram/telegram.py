@@ -1,5 +1,5 @@
 import telepot
-from monefy_app import keys
+import keys
 from telepot.loop import MessageLoop
 
 

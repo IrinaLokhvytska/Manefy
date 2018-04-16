@@ -1,4 +1,7 @@
 import pandas as pd
+import os
+
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 class FileParse:
@@ -23,5 +26,6 @@ class FileParse:
 
 if __name__ == '__main__':
     file_parser = FileParse()
-    data = file_parser.read_from_file('Monefy.Data.csv')
+    path = '{0}/{1}/{2}'.format(root_dir, 'downloads', 'Monefy.Data.05.04.18.csv')
+    data = file_parser.read_from_file(path)
     print(file_parser.get_balance(data))

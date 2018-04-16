@@ -74,5 +74,4 @@ class DropboxTransport:
 
 if __name__ == '__main__':
     dropbox_class = DropboxTransport()
-    dropbox_class.save_monefy_file()
     print(dropbox_class.test_dropbox())

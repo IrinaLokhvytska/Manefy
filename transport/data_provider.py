@@ -21,16 +21,19 @@ class DropboxTransport:
         self.dir = ''
 
     '''
-    :param access_token: dropbox API token.
-    :param download_path: path to folder where file should be saved.
-    :param dbx: initialize Dropbox app for access_token.
-    :param dir: root directory in the dropbpx application.
+        :param access_token: dropbox API token.
+        :param download_path: path to folder where file should be saved.
+        :param dbx: initialize Dropbox app for access_token.
+        :param dir: root directory in the dropbpx application.
     '''
 
     def test_dropbox(self) -> object:
+        '''The method that allows you to get the current information
+        about dropbox account using the access token.'''
         return self.dbx.users_get_current_account()
 
     def __get_list_of_files(self) -> list:
+        '''The method that gets a list of files from the dropbox account.'''
         files = []
         try:
             files = self.dbx.files_list_folder(self.dir).entries
@@ -39,6 +42,7 @@ class DropboxTransport:
         return files
 
     def save_monefy_file(self) -> str:
+        '''The method that saves the last monefy file in the specified directory'''
         file = self.__get_new_file(self.__get_list_of_files())
         id = self.test_dropbox().root_info.root_namespace_id
         path = ''
@@ -49,6 +53,7 @@ class DropboxTransport:
         return path
 
     def __get_new_file(self, files: list) -> str:
+        '''The method that gets the last monefy file'''
         date = datetime(1, 1, 1)
         file = ''
         monefy_files = self.__get_monefy_files(files)
@@ -59,8 +64,13 @@ class DropboxTransport:
                 file = monefy_files[i].name
         return file
 
+    '''
+        :param files: a list of files from the dropbox account.
+    '''
+
     @staticmethod
     def __parse_date_of_file(file: str) -> datetime:
+        '''The method that pars date from the file name'''
         pattern = r'(\d{1,2}(\-|\.)\d{1,2}(\-|\.)\d{2})'
         match = re.search(pattern, file)
         helper = [('.', '%d.%m.%y'), ('-', '%m-%d-%y')]
@@ -69,8 +79,13 @@ class DropboxTransport:
             if file_date.find(v[0]) > 1:
                 return datetime.strptime(file_date, v[1])
 
+    '''
+        :param file: a name of the monefy file.
+    '''
+
     @staticmethod
     def __get_monefy_files(files: list) -> list:
+        '''The method that returns the list only of the monefy files'''
         monefy_files = list(filter(lambda x: x.name.startswith('Monefy.Data'), files))
         return monefy_files
 

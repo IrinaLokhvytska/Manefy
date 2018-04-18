@@ -38,12 +38,15 @@ class DropboxTransport:
             print(e)
         return files
 
-    def save_monefy_file(self) -> None:
+    def save_monefy_file(self) -> str:
         file = self.__get_new_file(self.__get_list_of_files())
+        id = self.test_dropbox().root_info.root_namespace_id
+        path = ''
         if file:
             path_to_file = '{0}/{1}'.format(self.dir, file)
-            path = '{0}/{1}'.format(self.download_path, file)
+            path = '{0}/{1}{2}'.format(self.download_path, id, file)
             self.dbx.files_download_to_file(path, path_to_file)
+        return path
 
     def __get_new_file(self, files: list) -> str:
         date = datetime(1, 1, 1)

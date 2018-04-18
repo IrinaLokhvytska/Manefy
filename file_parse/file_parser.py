@@ -6,26 +6,23 @@ root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 class FileParse:
     @staticmethod
-    def read_from_file(path):
+    def read_from_file(path: str) -> object:
         return pd.read_csv(path)
 
-    def get_balance(self, data):
+    def get_balance(self, data: object) -> object:
         df = pd.DataFrame(data)
         amount = self.__replace_space(df['amount'])
         result = self.__convert_amount_2_float(amount).sum()
         return result
 
     @staticmethod
-    def __replace_space(amount):
+    def __replace_space(amount: str) -> str:
         return amount.apply(lambda x: x.replace('\xa0', ''))
 
     @staticmethod
-    def __convert_amount_2_float(amount):
+    def __convert_amount_2_float(amount: str) -> object:
         return pd.to_numeric(amount)
 
 
 if __name__ == '__main__':
     file_parser = FileParse()
-    path = '{0}/{1}/{2}'.format(root_dir, 'downloads', 'Monefy.Data.05.04.18.csv')
-    data = file_parser.read_from_file(path)
-    print(file_parser.get_balance(data))

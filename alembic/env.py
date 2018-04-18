@@ -1,7 +1,6 @@
 from __future__ import with_statement
 from alembic import context
 from sqlalchemy import engine_from_config, pool
-from sqlalchemy.ext.declarative import declarative_base
 from logging.config import fileConfig
 from db.transaction import Base
 

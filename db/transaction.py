@@ -1,11 +1,13 @@
 """ Module represents a Transaction. """
-
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (
     Column, String, Integer, Date
 )
 
+Base = declarative_base()
 
-class Transaction:
+
+class Transaction(Base):
     __tablename__ = 'transaction'
 
     id = Column(Integer, autoincrement=True, primary_key=True)

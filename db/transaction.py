@@ -18,7 +18,7 @@ class Transaction(Base):
     currency = Column(String(30), nullable=False)
     converted_amount = Column(String(255), nullable=False)
     converted_currency = Column(String(30), nullable=False)
-    description = Column(String(30), nullable=False)
+    description = Column(String(30), nullable=True)
 
     # Methods
     def __repr__(self):

@@ -1,8 +1,10 @@
 import pandas as pd
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
 from db.transaction import Transaction
 
-engine = 'postgresql://postgres:111@localhost'
+engine = create_engine('postgresql://postgres:111@localhost:5432/monefy')
+connection = engine.connect()
 Session = sessionmaker()
 Session.configure(bind=engine)
 
@@ -10,8 +12,8 @@ Session.configure(bind=engine)
 def add_transaction_2_bd(monefy_data):
     sess = Session()
     df = pd.DataFrame(monefy_data)
+    model = Transaction()
     for i in range(len(df)):
-        model = Transaction()
         model.date = df['date'][i]
         model.account = df['account'][i]
         model.category = df['category'][i]
@@ -22,3 +24,6 @@ def add_transaction_2_bd(monefy_data):
         model.description = df['description'][i]
         sess.add(model)
     sess.commit()
+    result = connection.execute('SELECT * FROM transaction')
+    for row in result:
+        print(row)

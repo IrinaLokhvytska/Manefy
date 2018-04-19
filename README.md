@@ -63,7 +63,8 @@ name - MonefyBot
 1. `alembic init --template generic alembic`
 2. change sqlalchemy.url in alembic.ini
 3. `alembic current`
-4. `import os
+4. Add to alembic/env.py
+`import os
 import sys
 MODEL_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..")
 sys.path.append(MODEL_PATH)

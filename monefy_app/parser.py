@@ -4,6 +4,7 @@ from db.transaction import Transaction
 
 some_engine = 'postgresql://postgres:111@localhost'
 
+
 def add_transaction_2_bd(monefy_data):
     sess = Session(bind=some_engine)
     df = pd.DataFrame(monefy_data)
@@ -19,5 +20,3 @@ def add_transaction_2_bd(monefy_data):
         model.description = df['description'][i]
         sess.add(model)
     sess.commit()
-
-

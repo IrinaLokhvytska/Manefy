@@ -1,12 +1,14 @@
 import pandas as pd
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 from db.transaction import Transaction
 
-some_engine = 'postgresql://postgres:111@localhost'
+engine = 'postgresql://postgres:111@localhost'
+Session = sessionmaker()
+Session.configure(bind=engine)
 
 
 def add_transaction_2_bd(monefy_data):
-    sess = Session(bind=some_engine)
+    sess = Session()
     df = pd.DataFrame(monefy_data)
     for i in range(len(df)):
         model = Transaction()

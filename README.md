@@ -63,3 +63,10 @@ name - MonefyBot
 1. `alembic init --template generic alembic`
 2. change sqlalchemy.url in alembic.ini
 3. `alembic current`
+4. `import os
+import sys
+MODEL_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..")
+sys.path.append(MODEL_PATH)
+from db import transaction`
+5. `target_metadata = transaction.Base.metadata`
+6. Run `alembic revision --autogenerate -m "initial"`

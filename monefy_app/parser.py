@@ -70,3 +70,6 @@ def select_transaction():
     res = session.query(Transaction).all()
     for e in res:
         print(e. date, e.account, e.amount, e.category, e.currency, e.is_debet)
+    cat = session.query(Category).all()
+    for c in cat:
+        print(c.title, c.amount, c.start_date, c.end_date)

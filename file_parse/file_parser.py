@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from monefy_app.parser import add_transaction_2_bd
+from monefy_app.parser import add_transaction_2_bd, select_transaction, delete_table
 
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -28,4 +28,8 @@ class FileParse:
 if __name__ == '__main__':
     file_parser = FileParse()
     data = file_parser.read_from_file('{}/{}/2762457936Monefy.Data.05.04.18.csv'.format(root_dir, 'downloads'))
+    # delete_table()
     add_transaction_2_bd(data)
+    select_transaction()
+
+

@@ -55,14 +55,15 @@ def get_category_id(category, session):
 
 
 def convert_ammount(amount: str) -> float:
-    result = lambda x: x.replace('\xa0', '')
-    return float(pd.to_numeric(result(amount)))
+    result = amount.replace('\xa0', '')
+    return float(pd.to_numeric(result))
 
 
-def delete_table():
-    connection.execute('DROP TABLE transaction')
-    connection.execute('DROP TABLE category')
-    connection.execute('DROP TABLE alembic_version')
+# def delete_table():
+#     connection.execute('DROP TABLE transaction')
+#     connection.execute('DROP TABLE category')
+#     connection.execute('DROP TABLE alembic_version')
+
 
 def select_transaction():
     session = Session()

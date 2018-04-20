@@ -13,7 +13,7 @@ def add_transaction_2_bd(monefy_data):
     df = pd.DataFrame(monefy_data)
     sess = Session()
     for i in range(len(df)):
-        category = add_category_2_bd(df['category'][i])
+        category = add_category_2_bd(df['category'][i].strip().lower())
         date = df['date'][i]
         model = Transaction()
         model.date = date
@@ -59,12 +59,6 @@ def convert_ammount(amount: str) -> float:
     return float(pd.to_numeric(result))
 
 
-# def delete_table():
-#     connection.execute('DROP TABLE transaction')
-#     connection.execute('DROP TABLE category')
-#     connection.execute('DROP TABLE alembic_version')
-
-
 def select_transaction():
     session = Session()
     res = session.query(Transaction).all()
@@ -73,3 +67,4 @@ def select_transaction():
     cat = session.query(Category).all()
     for c in cat:
         print(c.title, c.amount, c.start_date, c.end_date)
+

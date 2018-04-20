@@ -28,6 +28,5 @@ class FileParse:
 if __name__ == '__main__':
     file_parser = FileParse()
     data = file_parser.read_from_file('{}/{}/2762457936Monefy.Data.05.04.18.csv'.format(root_dir, 'downloads'))
-    # delete_table()
     add_transaction_2_bd(data)
     select_transaction()

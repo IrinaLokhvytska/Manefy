@@ -71,3 +71,4 @@ sys.path.append(MODEL_PATH)
 from db import transaction`
 5. `target_metadata = transaction.Base.metadata`
 6. Run `alembic revision --autogenerate -m "initial"`
+`alembic upgrade head`

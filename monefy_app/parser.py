@@ -67,4 +67,3 @@ def select_transaction():
     cat = session.query(Category).all()
     for c in cat:
         print(c.title, c.amount, c.start_date, c.end_date)
-

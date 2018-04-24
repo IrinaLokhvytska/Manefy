@@ -29,6 +29,7 @@ def add_transaction_2_bd(monefy_data):
         model.is_debet = model.amount >= 0
         sess.add(model)
     sess.commit()
+    sess.close()
 
 
 def check_category_exist(category, session):
@@ -55,6 +56,7 @@ def select_transaction():
     cat = session.query(Category).all()
     for c in cat:
         print(c.title, c.limit, c.start_date, c.period)
+    session.close()
 
 
 def delete_tables():

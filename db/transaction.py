@@ -22,7 +22,6 @@ class Category(Base):
     transaction = relationship("Transaction")
 
 
-
 class Transaction(Base):
     __tablename__ = 'transaction'
 

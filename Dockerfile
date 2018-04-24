@@ -1,5 +1,6 @@
 FROM python:3
 
+USER monefy
 WORKDIR /app
 ADD . /app
 RUN pip install pipenv

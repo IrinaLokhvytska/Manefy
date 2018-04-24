@@ -13,12 +13,14 @@ def add_transaction_2_bd(monefy_data):
     df = pd.DataFrame(monefy_data)
     sess = Session()
     for i in range(len(df)):
-        category = add_category_2_bd(df['category'][i].strip().lower())
-        date = df['date'][i]
+        category = df['category'][i].strip().lower()
         model = Transaction()
-        model.date = date
+        model.date = df['date'][i]
         model.account = df['account'][i]
-        model.category = category
+        if check_category_exist(category, sess):
+            model.category = sess.add(Category(title=category))
+        else:
+            model.category = get_category_id(category, sess)
         model.amount = convert_ammount(df['amount'][i])
         model.currency = df['currency'][i]
         model.converted_amount = convert_ammount(df['converted amount'][i])
@@ -27,20 +29,6 @@ def add_transaction_2_bd(monefy_data):
         model.is_debet = model.amount >= 0
         sess.add(model)
     sess.commit()
-
-
-def add_category_2_bd(category):
-    sess = Session()
-    model = Category()
-    if check_category_exist(category, sess):
-        model.title = category
-        model.amount = '1000'
-        sess.add(model)
-        sess.commit()
-        sess.flush()
-        return model.id
-    else:
-        return get_category_id(category, sess)
 
 
 def check_category_exist(category, session):
@@ -66,5 +54,14 @@ def select_transaction():
         print(e. date, e.account, e.amount, e.category, e.currency, e.is_debet)
     cat = session.query(Category).all()
     for c in cat:
-        print(c.title, c.amount, c.start_date, c.end_date)
+        print(c.title, c.limit, c.start_date, c.period)
 
+
+def delete_tables():
+    Transaction.__table__.drop(engine)
+    Category.__table__.drop(engine)
+    connection.execute('DROP TABLE alembic_version')
+
+
+if __name__ == '__main__':
+    delete_tables()

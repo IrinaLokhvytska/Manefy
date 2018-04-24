@@ -15,10 +15,12 @@ class Category(Base):
     id = Column(Integer, autoincrement=True, primary_key=True)
     timestamp = Column('timestamp', DateTime, default=datetime.utcnow())
     title = Column(String(255), nullable=False)
-    amount = Column(String(255), nullable=True)
+    limit = Column(Float, nullable=True)
     start_date = Column(Date, nullable=True)
-    end_date = Column(Date, nullable=True)
+    period = Column(Integer, nullable=True)
+    is_repeated = Column(Boolean, nullable=True)
     transaction = relationship("Transaction")
+
 
 
 class Transaction(Base):
@@ -28,7 +30,7 @@ class Transaction(Base):
     timestamp = Column('timestamp', DateTime, default=datetime.utcnow())
     date = Column(Date, nullable=False)
     account = Column(String(255), nullable=False)
-    category = Column(Integer, ForeignKey('category.id'))
+    category = Column(ForeignKey('category.id'))
     amount = Column(Float, nullable=False)
     currency = Column(String(30), nullable=False)
     converted_amount = Column(Float, nullable=False)

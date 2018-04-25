@@ -2,6 +2,7 @@ import pandas as pd
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from db.transaction import Transaction, Category
+from sqlalchemy.dialects.postgresql import insert
 
 engine = create_engine('postgresql://postgres:111@localhost:5432/monefy')
 connection = engine.connect()
@@ -11,17 +12,10 @@ Session.configure(bind=engine)
 
 def add_transaction_2_bd(monefy_data):
     df = pd.DataFrame(monefy_data)
-    sess = Session()
     for i in range(len(df)):
         category = df['category'][i].strip().lower()
-        if check_category_exist(category, sess):
-            cat = Category(title=category)
-            sess.add(cat)
-            sess.flush()
-            category_id = cat.id
-        else:
-            category_id = get_category_id(category, sess)
-        res = sess.query(Transaction).filter_by(
+        category_id = insert_category_2_bd(category)
+        insert_transaction = insert(Transaction).values(
             date=df['date'][i],
             account=df['account'][i],
             category=category_id,
@@ -31,46 +25,36 @@ def add_transaction_2_bd(monefy_data):
             converted_currency=df['currency.1'][i],
             description=str(df['description'][i]),
             is_debet=convert_ammount(df['amount'][i]) > 0
-        ).first()
-        if res:
-            print('The transaction exist')
-        else:
-            model = Transaction()
-            model.date = df['date'][i]
-            model.account = df['account'][i]
-            model.category = category_id
-            model.amount = abs(convert_ammount(df['amount'][i]))
-            model.currency = df['currency'][i]
-            model.converted_amount = convert_ammount(df['converted amount'][i])
-            model.converted_currency = df['currency.1'][i]
-            model.description = str(df['description'][i])
-            model.is_debet = convert_ammount(df['amount'][i]) > 0
-            sess.add(model)
-    sess.commit()
-    sess.close()
+        )
+        on_update_transaction = insert_transaction.on_conflict_do_update(
+            constraint='tr_constraint',
+            set_=dict(
+                category=category_id,
+                currency=df['currency'][i],
+                converted_amount=convert_ammount(df['converted amount'][i]),
+                converted_currency=df['currency.1'][i],
+                is_debet=convert_ammount(df['amount'][i]) > 0
+            )
+        )
+        connection.execute(on_update_transaction)
 
 
-def check_that_transaction_exist(transaction, session):
-    res = session.query(Transaction).filter_by(
-        date=transaction.date,
-        account=transaction.account,
-        amount=transaction.amount,
-        currency=transaction.currency,
-        converted_amount=transaction.converted_amount,
-        converted_currency=transaction.converted_currency,
-        is_debet=transaction.is_debet
-    ).first()
-    if not res:
-        return True
+def insert_category_2_bd(category):
+    insert_category = insert(Category).values(
+        title=category
+    )
+    do_nothing_category = insert_category.on_conflict_do_nothing(
+        index_elements=['title']
+    )
+    res = connection.execute(do_nothing_category)
+    if res.inserted_primary_key:
+        return res.inserted_primary_key[0]
+    else:
+        return get_category_id(category)
 
 
-def check_category_exist(category, session):
-    res = session.query(Category).filter_by(title=category).first()
-    if not res:
-        return True
-
-
-def get_category_id(category, session):
+def get_category_id(category):
+    session = Session()
     res = session.query(Category).filter_by(title=category).first()
     return res.id
 
@@ -106,4 +90,4 @@ def clean_tables():
 
 
 if __name__ == '__main__':
-    clean_tables()
+    delete_tables()

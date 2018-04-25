@@ -40,7 +40,6 @@ class Transaction(Base):
     description = Column('description', String(30), nullable=True)
     is_debet = Column('is_debet', Boolean)
 
-
     # Methods
     def __repr__(self):
         """ Show transaction object info. """
